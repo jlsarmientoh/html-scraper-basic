@@ -1,11 +1,10 @@
-package com.web.scraper.common.http;
+package com.web.scraper.core.http;
 
 
-import com.web.scraper.common.exceptions.HTTPException;
+import com.web.scraper.core.exceptions.HTTPException;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;

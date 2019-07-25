@@ -1,4 +1,4 @@
-package com.web.scraper.common.exceptions;
+package com.web.scraper.core.exceptions;
 
 
 public class HTTPException extends RuntimeException {

@@ -1,5 +1,6 @@
 package com.web.scraper;
 
+import com.web.scraper.config.AppConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
