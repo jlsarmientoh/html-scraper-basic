@@ -18,7 +18,6 @@ public class HashtagPatternTokenizer implements PatternTokenizer {
     public List<String> tokenize(String input) {
         Matcher hashTagMatcher = hashtagPattern.matcher(input);
         List<String> hashTags = new LinkedList<>();
-        hashTagMatcher.matches();
         while (hashTagMatcher.find()){
             hashTags.add(hashTagMatcher.group());
         }

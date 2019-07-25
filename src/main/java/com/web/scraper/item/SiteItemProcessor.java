@@ -14,22 +14,24 @@ import java.util.List;
 @Component("siteItemProcessor")
 public class SiteItemProcessor implements ItemProcessor<SiteInfo, SiteInfo> {
 
-    @Autowired
     private Client httpClient;
 
-    @Autowired
     private PatternTokenizer hastagPatternTokenizer;
 
-    public SiteItemProcessor(Client httpClient, PatternTokenizer hastagPatternTokenizer) {
+    private PatternTokenizer urlPatternTokenizer;
+
+
+    public SiteItemProcessor(Client httpClient, PatternTokenizer hastagPatternTokenizer, PatternTokenizer urlPatternTokenizer) {
         this.httpClient = httpClient;
         this.hastagPatternTokenizer = hastagPatternTokenizer;
+        this.urlPatternTokenizer = urlPatternTokenizer;
     }
 
     @Override
     public SiteInfo process(SiteInfo siteInfo) throws Exception {
 
-
-        String siteHtml = httpClient.get(siteInfo.getSiteUrl());
+        String baseUrl = urlPatternTokenizer.tokenize(siteInfo.getSiteUrl()).get(0);
+        String siteHtml = httpClient.get(baseUrl);
 
         List<String> hashtags = hastagPatternTokenizer.tokenize(siteHtml);
         StringBuilder stringBuilder = new StringBuilder();
@@ -40,6 +42,7 @@ public class SiteItemProcessor implements ItemProcessor<SiteInfo, SiteInfo> {
         }
 
         siteInfo.setMatches(stringBuilder.toString());
+        siteInfo.setSiteName(baseUrl);
 
         return siteInfo;
     }
