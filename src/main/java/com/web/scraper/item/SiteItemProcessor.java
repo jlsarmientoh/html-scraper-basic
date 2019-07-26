@@ -6,12 +6,12 @@ import com.web.scraper.domain.SiteInfo;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 import java.util.LinkedList;
 import java.util.List;
 
-@Component("siteItemProcessor")
 public class SiteItemProcessor implements ItemProcessor<SiteInfo, SiteInfo> {
 
     private Client httpClient;
@@ -38,7 +38,7 @@ public class SiteItemProcessor implements ItemProcessor<SiteInfo, SiteInfo> {
 
         for (String hashTag : hashtags) {
             stringBuilder.append(hashTag);
-            stringBuilder.append("\\n");
+            stringBuilder.append('\n');
         }
 
         siteInfo.setMatches(stringBuilder.toString());

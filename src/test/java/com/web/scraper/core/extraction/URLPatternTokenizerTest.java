@@ -1,6 +1,6 @@
 package com.web.scraper.core.extraction;
 
-import com.web.scraper.config.AppConfig;
+import com.web.scraper.config.TestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 public class URLPatternTokenizerTest {
 
     @Autowired

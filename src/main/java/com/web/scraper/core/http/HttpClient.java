@@ -9,13 +9,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Component
 public class HttpClient implements Client {
 
     public static final String USER_AGENT = "Mozilla/5.0";
     public static final String GET_REQUEST = "GET";
     public static final String ERROR_SUMMARY = "Unable to get html from site: %s - Cause: %s";
-    public static final String ERROR_SITE_NOT_AVAILABLE = "Site not available or moved";
+    public static final String ERROR_SITE_NOT_AVAILABLE = "Site not available or moved: %s - HTTP Status code : %d";
 
     public String get(String siteURL) throws HTTPException {
         URL url = null;
@@ -28,8 +27,16 @@ public class HttpClient implements Client {
 
             int responseCode = httpURLConnection.getResponseCode();
 
-            if(responseCode != 200)
-                throw new Exception(ERROR_SITE_NOT_AVAILABLE);
+            if(HttpURLConnection.HTTP_MOVED_TEMP == responseCode
+                        || HttpURLConnection.HTTP_MOVED_PERM == responseCode
+                        || HttpURLConnection.HTTP_SEE_OTHER == responseCode){
+
+                String newUrl = httpURLConnection.getHeaderField("Location");
+                httpURLConnection.disconnect();
+                httpURLConnection = (HttpURLConnection) new URL(newUrl).openConnection();
+            } else if(HttpURLConnection.HTTP_OK != responseCode) {
+                throw new Exception(String.format(ERROR_SITE_NOT_AVAILABLE, siteURL, responseCode));
+            }
 
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(httpURLConnection.getInputStream()));

@@ -1,10 +1,9 @@
 package com.web.scraper.core.extraction;
 
-import com.web.scraper.config.AppConfig;
+import com.web.scraper.config.TestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -13,7 +12,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 public class HashtagPatternTokenizerTest {
 
     @Autowired
